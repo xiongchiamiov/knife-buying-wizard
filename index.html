@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title>Knife-Buying Wizard</title>
+	<style type="text/css">
+		body {
+			color: #ddd;
+			background-color: #222;
+			font-family: Tahoma, Geneva, "Trebuchet MS", sans-serif;
+			margin-left: 10%;
+			margin-right: 10%;
+			line-height: 1.6;
+		}
+		a {
+			color: #AFB8DE;
+		}
+		a:visited {
+			color: #C7AFDE;
+		}
+		p, #entries {
+			border: 2px dashed #444;
+			padding: 1em;
+		}
+		#entries {
+			list-style: none;
+		}
+		#entries li {
+			margin: 0;
+			margin-bottom: 1em;
+		}
+	</style>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.1/mootools-yui-compressed.js"></script>
+	<script type="text/javascript">
+		window.addEvent('domready', function() {
+			Enum = new Class({
+				initialize: function(values) {
+					Array.each(values, function(value) {
+						this[value] = value;
+					}, this);
+				}
+			});
+			
+			Manufacturer = new Enum(['Benchmade']);
+			Edge = new Enum(['Serrated', 'Plain-Edge', 'SE/PE Combo', 'PE/SE Combo']);
+			Lock = new Enum(['Liner/Frame', 'Lock-Back/Mid-Lock', 'AXIS']);
+			Opener = new Enum(['Thumb Stud', 'Thumb Hole', 'Flipper', 'Nail Nick']);
+			BladeShape = new Enum(['Drop-Point', 'Tanto', 'Sheepsfoot']);
+			BladeMaterial = new Enum(['Stainless Steel', 'Carbon Steel']);
+			ClipMount = new Enum(['Tip-Up', 'Tip-Down', 'Reversible']);
+			
+			Knife = new Class({
+				initialize: function(manufacturer, model, edge, lock, opener,
+				                     bladeShape, bladeMaterial,
+				                     tipUp, tipDown, reversible) {
+					this.manufacturer = manufacturer;
+					this.model = model;
+					this.edge = edge;
+					this.lock = lock;
+					this.opener = opener;
+					this.bladeShape = bladeShape;
+					this.bladeMaterial = bladeMaterial;
+					this.tipUp = tipUp;
+					this.tipDown = tipDown;
+					this.reversible = reversible;
+				}
+			});
+			
+			knives = [
+				new Knife(Manufacturer.Benchmade,
+				          '553 Tanto Gripilian',
+				          Edge['Plain-Edge'],
+						  Lock.AXIS,
+						  Opener['Thumb Stud'],
+						  BladeShape.Tanto,
+						  BladeMaterial['Stainless Steel'],
+						  'yes', 'no', 'yes'
+				),
+				new Knife(Manufacturer.Benchmade,
+				          '553S Tanto Gripilian',
+				          Edge['PE/SE Combo'],
+						  Lock.AXIS,
+						  Opener['Thumb Stud'],
+						  BladeShape.Tanto,
+						  BladeMaterial['Stainless Steel'],
+						  'yes', 'no', 'yes'
+				)
+			];
+			
+			knives.each(function(knife) {
+				var row = new Element('tr');
+				row.grab(new Element('td', {text: knife.manufacturer}));
+				row.grab(new Element('td', {text: knife.model}));
+				row.grab(new Element('td', {text: knife.edge}));
+				row.grab(new Element('td', {text: knife.lock}));
+				row.grab(new Element('td', {text: knife.opener}));
+				row.grab(new Element('td', {text: knife.bladeShape}));
+				row.grab(new Element('td', {text: knife.bladeMaterial}));
+				row.grab(new Element('td', {text: knife.tipUp}));
+				row.grab(new Element('td', {text: knife.tipDown}));
+				row.grab(new Element('td', {text: knife.reversible}));
+				$('knives').grab(row);
+			});
+		});
+	</script>
+</head>
+<body>
+	<p>
+		Too opinionated about knives?  Have a hard time tracking down a knife
+		with the exact characteristics you want?  Look no further, my dear
+		visitor - you have found the site you've been looking for your whole
+		life.
+	</p>
+	<p>
+		This tool was inspired by <a
+		href="http://www.benchmade.com/products/knife_wizard.aspx">Benchmade's
+		Knife Wizard</a> and /r/knives' <a
+		href="https://docs.google.com/document/d/1XX8a_s6Gshg6RMRtmiChjJk77ORYaJfQepLl6DUekl8">Buying
+		Guide</a>.
+	</p>
+	<table id="knives">
+		<tr>
+			<th>Manufacturer</th>
+			<th>Model</th>
+			<th>Edge</th>
+			<th>Locking Mechanism</th>
+			<th>Opening Mechanism</th>
+			<th>Blade Shape</th>
+			<th>Blade Material</th>
+			<th>Tip-Up Clip</th>
+			<th>Tip-Down Clip</th>
+			<th>Reversible Clip</th>
+		</tr>
+	</table>
+</body>
+</html>
+
