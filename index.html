@@ -19,21 +19,41 @@
 		a:visited {
 			color: #C7AFDE;
 		}
-		p, #entries {
+		p, .infobox, table {
 			border: 2px dashed #444;
 			padding: 1em;
 		}
-		#entries {
-			list-style: none;
+		.infobox {
+			height: 400px;
 		}
-		#entries li {
-			margin: 0;
-			margin-bottom: 1em;
+		.infobox h1 {
+			margin-top: 0;
+		}
+		.infobox span {
+			display: block;
+		}
+		.infobox .left {
+			width: 25%;
+			float: left;
+		}
+		.infobox .right {
+			float: right;
+			width: 70%;
+			margin-top: -18px;
+			border: none;
 		}
 	</style>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.1/mootools-yui-compressed.js"></script>
 	<script type="text/javascript">
 		window.addEvent('domready', function() {
+			$$('.infobox .right').setStyle('display', 'none');
+			$$('.infobox form span').addEvent('mouseenter', function(input) {
+				var value = this.children[0].value;
+				//console.log(value);
+				$$('.infobox .right').setStyle('display', 'none');
+				$(value + '-description').setStyle('display', 'block');
+			});
+			
 			Enum = new Class({
 				initialize: function(values) {
 					Array.each(values, function(value) {
@@ -119,6 +139,40 @@
 		href="https://docs.google.com/document/d/1XX8a_s6Gshg6RMRtmiChjJk77ORYaJfQepLl6DUekl8">Buying
 		Guide</a>.
 	</p>
+	<div class="infobox" id="Manufacturer">
+		<h1>Manufacturer</h1>
+		<form class="left">
+			<span>
+				<input type="checkbox" value="Benchmade" id="Benchmade" />
+				<label for="Benchmade">Benchmade</label>
+			</span>
+			<span>
+				<input type="checkbox" value="Spyderco" id="Spyderco" />
+				<label for="Spyderco">Spyderco</label>
+			</span>
+		</form>
+		<p class="right" id="Benchmade-description">
+			Beard put a bird on it bicycle rights pitchfork retro. Four loko
+			cred banksy beard echo park cardigan quinoa chambray hoodie, cliche
+			mustache raw denim american apparel squid you probably haven't
+			heard of them. Carles marfa art party, craft beer gluten-free
+			gentrify lo-fi quinoa fanny pack beard keffiyeh leggings vice 8-bit
+			organic. Viral fap letterpress iphone. Portland chambray four loko
+			next level shoreditch. American apparel scenester art party
+			locavore helvetica. Tofu shoreditch messenger bag 3 wolf moon etsy.
+		</p>
+		<p class="right" id="Spyderco-description">
+			Put a bird on it keffiyeh wolf banh mi, +1 squid four loko 3 wolf
+			moon cred. Quinoa american apparel beard, cliche letterpress carles
+			fap farm-to-table messenger bag retro stumptown scenester. Leggings
+			organic seitan wayfarers lo-fi, trust fund brunch thundercats
+			sustainable put a bird on it artisan. Viral letterpress vinyl
+			cliche echo park. Austin beard +1 american apparel lomo. Jean
+			shorts terry richardson iphone 3 wolf moon leggings, banksy tofu +1
+			seitan dreamcatcher locavore single-origin coffee. Letterpress
+			biodiesel art party, four loko beard fap brunch.
+		</p>
+	</div>
 	<table id="knives">
 		<tr>
 			<th>Manufacturer</th>
