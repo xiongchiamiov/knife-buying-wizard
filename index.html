@@ -45,6 +45,34 @@
 	</style>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.1/mootools-yui-compressed.js"></script>
 	<script type="text/javascript">
+		Array.prototype.uninclude = function(value) {
+			var index = this.indexOf(value);
+			if (index != -1) {
+				this.splice(index, 1);
+			}
+		};
+		
+		filter_knives = function() {
+			$$('.knife').dispose();
+			knives = allKnives.filter(function(knife) {
+				return filters['manufacturer'].contains(knife.manufacturer);
+			});
+			knives.each(function(knife) {
+				var row = new Element('tr', {'class': 'knife'});
+				row.grab(new Element('td', {text: knife.manufacturer}));
+				row.grab(new Element('td', {text: knife.model}));
+				row.grab(new Element('td', {text: knife.edge}));
+				row.grab(new Element('td', {text: knife.lock}));
+				row.grab(new Element('td', {text: knife.opener}));
+				row.grab(new Element('td', {text: knife.bladeShape}));
+				row.grab(new Element('td', {text: knife.bladeMaterial}));
+				row.grab(new Element('td', {text: knife.tipUp}));
+				row.grab(new Element('td', {text: knife.tipDown}));
+				row.grab(new Element('td', {text: knife.reversible}));
+				$('knives').grab(row);
+			});
+		};
+		
 		window.addEvent('domready', function() {
 			$$('.infobox .right').setStyle('display', 'none');
 			$$('.infobox form span').addEvent('mouseenter', function(input) {
@@ -52,6 +80,17 @@
 				//console.log(value);
 				$$('.infobox .right').setStyle('display', 'none');
 				$(value + '-description').setStyle('display', 'block');
+			});
+			$$('.infobox form input').addEvent('click', function(input) {
+				var value = this.value;
+				if (this.checked) {
+					console.log(value + ' selected');
+					filters['manufacturer'].include(value);
+				} else {
+					console.log(value + ' unselected');
+					filters['manufacturer'].uninclude(value);
+				}
+				filter_knives();
 			});
 			
 			Enum = new Class({
@@ -87,7 +126,7 @@
 				}
 			});
 			
-			knives = [
+			allKnives = [
 				new Knife(Manufacturer.Benchmade,
 				          '553 Tanto Gripilian',
 				          Edge['Plain-Edge'],
@@ -107,21 +146,9 @@
 						  'yes', 'no', 'yes'
 				)
 			];
+			filters = {'manufacturer': []};
 			
-			knives.each(function(knife) {
-				var row = new Element('tr');
-				row.grab(new Element('td', {text: knife.manufacturer}));
-				row.grab(new Element('td', {text: knife.model}));
-				row.grab(new Element('td', {text: knife.edge}));
-				row.grab(new Element('td', {text: knife.lock}));
-				row.grab(new Element('td', {text: knife.opener}));
-				row.grab(new Element('td', {text: knife.bladeShape}));
-				row.grab(new Element('td', {text: knife.bladeMaterial}));
-				row.grab(new Element('td', {text: knife.tipUp}));
-				row.grab(new Element('td', {text: knife.tipDown}));
-				row.grab(new Element('td', {text: knife.reversible}));
-				$('knives').grab(row);
-			});
+			filter_knives();
 		});
 	</script>
 </head>
